@@ -3,7 +3,6 @@
 @section('content')
 
 <div class="row">
-
     <div class="col-md-12 col-sm-12 col-xs-12">
 
         <div class="row  text-danger">
@@ -20,62 +19,58 @@
             </div>
         </div>
 
-
         @if(session()->has('success'))
-        <div class="alert alert-success alerta">
+        <div id="success-alert" class="alert alert-success alerta">
             {{ session()->get('success') }}
         </div>
         @endif
     </div>
+</div>
 
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h3>Datos de usuario</h3>
-                <div class="clearfix"></div>
+<div class="card card-default">
+    <div class="card-header">
+        <h2 class="card-title">Datos de usuario</h2>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+    <div class="row">
+    <form method="post" action="{{ route('profile_user.update_data_profile') }}">
+        @method('POST')
+        @csrf
+
+        <div class="row">
+            <div class="row col-12">
+                <div class="form-group col-md-6 col-sm-12">
+                    <label>Nombre</label>
+                    <input type="text" class="form-control" value="{{ $data['user']->name }}" name="name" id="name">
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label>Apellidos</label>
+                    <input type="text" class="form-control" value="{{ $data['user']->lastname }}" name="lastname" id="lastname">
+                </div>
             </div>
-            <div class="x_content">
-                <br />
 
-                <form method="post" action="{{ route('profile_user.update_data_profile') }}">
-                    @method('POST')
-                    @csrf
-
-                    <div class="row">
-                        <div class="row col-12">
-                            <div class="form-group col-md-6 col-sm-12">
-                                <label>Nombre</label>
-                                <input type="text" class="form-control" value="{{ $data['user']->name }}" name="name" id="name">
-                            </div>
-                            <div class="form-group col-md-6 col-sm-12">
-                                <label>Apellidos</label>
-                                <input type="text" class="form-control" value="{{ $data['user']->lastname }}" name="lastname" id="lastname">
-                            </div>
-                        </div>
-
-                        <div class="row col-12">
-                            <div class="form-group col-md-6 col-sm-12">
-                                <label>Email</label>
-                                <input type="text" class="form-control" value="{{ $data['user']->email }}" name="email" id="email" required>
-                            </div>
-                            <div class="form-group col-md-6 col-sm-12">
-                                <label>Telefono</label>
-                                <input type="text" class="form-control" value="{{ $data['user']->phone }}" name="phone" id="phone" required>
-                            </div>
-                        </div>
-
-
-                        <button type="submit" class="btn bg-primary float-right boton-guardar-registro">Aceptar</button>
-
-
-                    </div>
-                </form>
-
-
+            <div class="row col-12">
+                <div class="form-group col-md-6 col-sm-12">
+                    <label>Email</label>
+                    <input type="text" class="form-control" value="{{ $data['user']->email }}" name="email" id="email" required>
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label>Telefono</label>
+                    <input type="text" class="form-control" value="{{ $data['user']->phone }}" name="phone" id="phone" required>
+                </div>
             </div>
+
+
+            <button type="submit" class="btn bg-primary float-right boton-guardar-registro">Aceptar</button>
+
         </div>
+    </form>
+
+</div>
     </div>
 </div>
+
 
 
 @endsection

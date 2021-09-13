@@ -2,15 +2,15 @@
 
 @section('content')
 
-<div class="row">
-    <div class="x_panel">
-        <div class="x_title">
-            <h3>Editar Usuario</h3>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
 
-            <form method="post" action="{{ route('admin.update_user', $data['user']->id) }}">
+<div class="card card-default">
+    <div class="card-header">
+        <h2 class="card-title">Editar Usuario</h2>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+
+    <form method="post" action="{{ route('admin.update_user', $data['user']->id) }}">
                 @method('PATCH')
                 @csrf
 
@@ -44,11 +44,7 @@
 
 
             </form>
-        </div>
     </div>
 </div>
-
-
-
 
 @endsection

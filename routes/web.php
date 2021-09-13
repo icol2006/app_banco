@@ -15,11 +15,50 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', function () {
+//     return view('main.index');
+// });
 
+Route::get('/home', function () {
+    return redirect('/admin/list_users');
+});
 
+//Limpiar cache sistema
+Route::get('/clear-cache', function () {
+    $exitCode = Artisan::call('config:clear');
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('config:cache');
+    return 'DONE'; //Return anything
+});
+
+Route::middleware(['auth'])->group(function () {
+
+    
+    Route::namespace('App\Http\Controllers\Admin')->prefix('admin')
+        ->middleware(['role:' . RolesNames::$admin])
+        ->name('admin.')->group(function () {
+            // Route::get('/', 'PageController@index')->name('index');
+            Route::get('/list_users', 'PageController@list_users')->name('list_users');
+            Route::get('/edit_user/{id}', 'PageController@edit_user')->name('edit_user');
+            Route::get('/create_user', 'PageController@create_user')->name('create_user');
+            Route::post('/store_user', 'PageController@store_user')->name('store_user');
+            Route::patch('/update_user/{id}', 'PageController@update_user')->name('update_user');
+            Route::get('/disable_user/{id}', 'PageController@disable_user')->name('disable_user');
+            Route::get('/enable_user/{id}', 'PageController@enable_user')->name('enable_user');
+            Route::get('/delete_user/{id}', 'PageController@delete_user')->name('delete_user');
+        });
+    
+        Route::namespace('App\Http\Controllers\ProfileUser')->prefix('profile_user')
+        ->name('profile_user.')->group(function () {
+            Route::get('/data_profile', 'PageController@data_profile')->name('data_profile');
+            Route::post('/update_data_profile', 'PageController@update_data_profile')->name('update_data_profile');
+            Route::get('/change_password', 'PageController@change_password')->name('change_password');
+            Route::post('/update_password', 'PageController@update_password')->name('update_password');
+            Route::post('/update_signature_image', 'PageController@update_signature_image')->name('update_signature_image');
+        });
+});
