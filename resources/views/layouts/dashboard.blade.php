@@ -18,6 +18,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/estilo.css') }}">
@@ -70,7 +73,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link navbar-ligth">
                 <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+                <span class="brand-text font-weight-light">App Banco</span>
             </a>
 
             <!-- Sidebar -->
@@ -115,6 +118,47 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                             </ul>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Cuentas usuarios
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('cuenta.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Consultar</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('cuenta.create') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Agregar</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('profile_user.data_profile') }}" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Perfil usuario
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('profile_user.change_password') }}" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Cambiar password
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
@@ -122,7 +166,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     Salir
                                 </p>
                             </a>
-
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -176,6 +220,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- Select2 -->
+    <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
     <!-- DataTables  & Plugins -->
@@ -216,6 +262,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             "responsive": true,
         });
     });
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+        theme: 'bootstrap4'
+    })
 </script>
 
 </html>

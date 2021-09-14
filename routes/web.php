@@ -61,4 +61,19 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/update_password', 'PageController@update_password')->name('update_password');
             Route::post('/update_signature_image', 'PageController@update_signature_image')->name('update_signature_image');
         });
+
+        Route::namespace('App\Http\Controllers\Cuenta')->prefix('cuenta')
+        ->name('cuenta.')->group(function () {
+            Route::get('/', 'PageController@index')->name('index');
+            Route::get('/edit/{id}', 'PageController@edit')->name('edit');
+            Route::get('/create', 'PageController@create')->name('create');
+            Route::post('/store', 'PageController@store')->name('store');
+            Route::patch('/update/{id}', 'PageController@update')->name('update');
+            Route::get('/delete/{id}', 'PageController@delete')->name('delete');
+
+            Route::get('/api_getAll', 'PageController@api_getAll')->name('api_getAll');
+            Route::get('/api_getById/{id}', 'PageController@api_getById')->name('api_getById');
+            Route::get('/api_getAllByUsuarioID/{id}', 'PageController@api_getAllByUsuarioID')->name('api_getAllByUsuarioID');
+            Route::post('/api_add', 'PageController@api_add')->name('api_add');
+        });
 });
