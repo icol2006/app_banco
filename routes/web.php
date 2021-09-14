@@ -24,9 +24,10 @@ Auth::routes();
 //     return view('main.index');
 // });
 
-Route::get('/home', function () {
-    return redirect('/admin/list_users');
-});
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
 //Limpiar cache sistema
 Route::get('/clear-cache', function () {
@@ -65,11 +66,31 @@ Route::middleware(['auth'])->group(function () {
         Route::namespace('App\Http\Controllers\Cuenta')->prefix('cuenta')
         ->name('cuenta.')->group(function () {
             Route::get('/', 'PageController@index')->name('index');
+            Route::get('/index_cliente', 'PageController@index_cliente')->name('index_cliente');            
             Route::get('/edit/{id}', 'PageController@edit')->name('edit');
             Route::get('/create', 'PageController@create')->name('create');
             Route::post('/store', 'PageController@store')->name('store');
             Route::patch('/update/{id}', 'PageController@update')->name('update');
             Route::get('/delete/{id}', 'PageController@delete')->name('delete');
+            Route::get('/realizar_transaccion', 'PageController@realizar_transaccion')->name('realizar_transaccion');
+            Route::patch('/realizar_transaccion_update', 'PageController@realizar_transaccion_update')->name('realizar_transaccion_update');
+
+            Route::get('/api_getAll', 'PageController@api_getAll')->name('api_getAll');
+            Route::get('/api_getById/{id}', 'PageController@api_getById')->name('api_getById');
+            Route::get('/api_getAllByUsuarioID/{id}', 'PageController@api_getAllByUsuarioID')->name('api_getAllByUsuarioID');
+            Route::post('/api_add', 'PageController@api_add')->name('api_add');
+        });
+
+        Route::namespace('App\Http\Controllers\HistorialCuenta')->prefix('historial_cuenta')
+        ->name('historial_cuenta.')->group(function () {
+            Route::get('/', 'PageController@index')->name('index');
+            Route::get('/index_cliente', 'PageController@index_cliente')->name('index_cliente');            
+            Route::get('/edit/{id}', 'PageController@edit')->name('edit');
+            Route::get('/create', 'PageController@create')->name('create');
+            Route::post('/store', 'PageController@store')->name('store');
+            Route::patch('/update/{id}', 'PageController@update')->name('update');
+            Route::get('/delete/{id}', 'PageController@delete')->name('delete');
+            Route::get('/getByIdCuenta/{id}', 'PageController@getByIdCuenta')->name('getByIdCuenta');            
 
             Route::get('/api_getAll', 'PageController@api_getAll')->name('api_getAll');
             Route::get('/api_getById/{id}', 'PageController@api_getById')->name('api_getById');

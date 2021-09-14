@@ -29,38 +29,18 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Consultar cuentas cliente</h3>
+                <h3 class="card-title">Listado de cuentas</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
 
-                <form method="get" class="form-inline col-12" action="{{ route('cuenta.index') }}">
-
-                    <div class="form-group col-7">
-                        <label style="margin-right: 20px;">Nombre Cliente</label>
-                        <select class="form-control select2 col-9" name="usuarioID">
-                            <option value="0">Sin especificar </option>
-                            @foreach($data['usuarios'] as $dato )
-                            @if ($dato->hasRole(App\Models\RolesNames::$cliente))
-                            <option value="{{ $dato->id }}" {{ $data['usuarioSelecionado']==$dato->id?'selected':'' }}>
-                                {{ $dato->getFullName() }}
-                            </option>
-                            @endif
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn btn-info boton-guardar-registro " style="margin-left: 10px;">Consultar cuentas</button>
-                </form>
-                <br>
-
-                <a href="{{ route('cuenta.create')}}" class="btn btn-primary boton-agregar-registro">Agregar
-                    Registro <i class="fa fa-plus"></i></a>
+                <a href="{{ route('cuenta.realizar_transaccion')}}" class="btn btn-primary boton-agregar-registro">Realizar transaccion
+                    <i class="fa fa-plus"></i></a>
 
                 <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>Cliente </th>
+                            <th>Num Cuenta </th>
                             <th>Monto </th>
                             <th>Tipo </th>
                             <th></th>
@@ -70,7 +50,7 @@
                         @foreach($data['listado_cuentas'] as $item)
                         <tr>
                             <td>
-                                {{ $item->getFullNameUsuario()  }}
+                                {{ $item->id  }}
                             </td>
                             <td>
                                 {{ $item->monto }}
@@ -79,9 +59,7 @@
                                 {{ strtoupper($item->tipo) }}
                             </td>
                             <td>
-                                <a href="{{ route('historial_cuenta.getByIdCuenta',$item->id)}}" class="btn btn-info">Ver Historial</a>
-                                <a style="margin-left: 10px;" href="{{ route('cuenta.delete',$item->id)}}" class="btn btn-danger"> Eliminar</a>
-
+                            <a href="{{ route('historial_cuenta.getByIdCuenta',$item->id)}}" class="btn btn-info">Ver Historial</a>
                             </td>
                         </tr>
                         @endforeach

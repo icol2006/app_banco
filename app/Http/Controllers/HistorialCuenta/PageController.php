@@ -103,6 +103,17 @@ class PageController extends Controller
             ->with('success', 'Registro borrado exitosamente');
     }
 
+    public function getByIdCuenta($id)
+    {
+        $listado_historial_cuenta = HistorialCuenta::where('cuentaID', $id)->get();
+
+        $data = [
+            'listado_historial_cuenta'  => $listado_historial_cuenta,
+        ];
+
+        return view("historial_cuenta.getByIdCuenta", compact('data'));
+    }
+
     public function api_getAll()
     {
         $historialCuenta = HistorialCuenta::all();

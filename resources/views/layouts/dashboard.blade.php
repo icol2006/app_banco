@@ -95,9 +95,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+
+                        @if (App\Models\User::find(Auth::user()->id)->hasRole(App\Models\RolesNames::$admin))
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     Admin usuarios
                                     <i class="right fas fa-angle-left"></i>
@@ -121,9 +123,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon far fa-credit-card"></i>
                                 <p>
-                                    Cuentas usuarios
+                                    Cuentas Banco
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -142,10 +144,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                             </ul>
                         </li>
+                        @endif
+
+                        @if (App\Models\User::find(Auth::user()->id)->hasRole(App\Models\RolesNames::$cliente))
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon far fa-credit-card"></i>
+                                <p>
+                                    Cuentas Banco
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('cuenta.index_cliente') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Listado</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('cuenta.realizar_transaccion') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Realizar transaccion</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        @endif
 
                         <li class="nav-item">
                             <a href="{{ route('profile_user.data_profile') }}" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-user"></i>
                                 <p>
                                     Perfil usuario
                                 </p>
@@ -153,7 +182,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('profile_user.change_password') }}" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-edit"></i>
                                 <p>
                                     Cambiar password
                                 </p>
@@ -161,7 +190,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
                         <li class="nav-item">
                             <a href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-sign-out-alt"></i>
                                 <p>
                                     Salir
                                 </p>

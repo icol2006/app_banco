@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Cuenta;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cuenta;
+use App\Models\HistorialCuenta;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
@@ -28,6 +30,23 @@ class PageController extends Controller
         ];
 
         return view("cuenta.index", compact('data'));
+    }
+
+    public function index_cliente(Request $request)
+    {
+        $listado_cuentas = [];
+        $usuarioID  = Auth::id();;
+
+        try{
+            $listado_cuentas = Cuenta::where('usuarioID', $usuarioID)->get();
+        }catch (Exception $ex) {
+        }
+
+        $data = [
+            'listado_cuentas'  => $listado_cuentas,
+        ];
+
+        return view("cuenta.index_cliente", compact('data'));
     }
 
     public function edit($id)
@@ -116,6 +135,63 @@ class PageController extends Controller
 
         return redirect()->route('cuenta.index')
             ->with('success', 'Registro borrado exitosamente');
+    }
+
+    public function realizar_transaccion()
+    {
+        $id = Auth::id();
+        $listado_cuentas = Cuenta::where('usuarioID', $id)->get();
+
+        $data = [
+            'listado_cuentas'  => $listado_cuentas,
+        ];
+
+        return view('cuenta.transaccion',compact('data'));
+    }
+
+    public function realizar_transaccion_update(Request $request)
+    {
+        $resultado=0;
+        $this->validate(
+            $request,
+            [
+                'monto'     => 'required',
+            ],
+            [
+                'monto.required'      => 'Monto es requerido',
+            ]
+        );
+        $opcion=$request['opcion'];
+        $cuenta = Cuenta::find($request['id']);
+
+        if($opcion=='retiro')
+        {
+            $resultado=$cuenta->monto-$request['monto'];
+            if($cuenta->tipo=='debito')
+            {
+                if($resultado<0){
+                    $errors = array();
+                    array_push($errors, 'No tiene suficiente saldo');
+                    return redirect('cuenta/realizar_transaccion')
+                        ->with('errors', $errors);                    
+                }
+            }
+            
+        }else if($opcion=='deposito'){
+            $resultado=$cuenta->monto+$request['monto'];
+        }
+       
+        $cuenta->monto=$resultado;
+        $cuenta->update();
+
+        $historialCuenta=new HistorialCuenta();
+        $historialCuenta->cuentaID=$cuenta->id;
+        $historialCuenta->monto=$cuenta->monto;
+        $historialCuenta->transaccion=$opcion;
+        $historialCuenta->fecha=date('Y-m-d h:i');
+        $historialCuenta->save();
+
+        return redirect('cuenta/index_cliente')->with('success', 'Datos guardados!');
     }
 
     public function api_getAll()

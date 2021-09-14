@@ -40,7 +40,6 @@
                     </div>
                     <div class="form-group col-md-6 col-sm-12 col-xs-12">
                         <label>Tipo de cuenta</label>
-
                         <select class="form-control" name="tipo" id="tipo">
                             <option value="credito">Credito</option>
                             <option value="debito">Debito</option>
@@ -60,7 +59,6 @@
                                 </option>
                                 @endif
                                 @endforeach
-
                             </select>
                         </div>
                     </div>

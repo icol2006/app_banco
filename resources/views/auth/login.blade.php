@@ -116,9 +116,9 @@
               </div>
             </div>
             <div class="peers ai-c jc-sb fxw-nw mt-5">
-              <div class="peer text-center w-100">
+              <!-- <div class="peer text-center w-100">
                 <a class="btn btn-link" href="{{ url("/password/reset") }}">Olvido su password</a>
-              </div>
+              </div> -->
             </div>
           </div>
         </form>
